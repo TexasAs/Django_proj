@@ -5,36 +5,35 @@ from products.serilaizers import ProductSerializer
 
 
 class ProductSerializerTestCase(TestCase):
+
     def test_ser(self):
+
         product_1 = Product.objects.create(name = "Some", description = "Tru", description_category = "th",
-                                           receipt_date = "2023-09-04T14:34:11.593501Z")
+                                           receipt_date = "2023-09-05T17:20:45.536006Z")
         product_2 = Product.objects.create(name="Some 1", description="Tru 1", description_category="th",
-                                           receipt_date="2023-09-04T14:34:11.593501Z")
-        serializer_data = ProductSerializer([product_1, product_2], many=True).data
+                                           receipt_date="None")
 
-#        OrderedDict = ()
-#
-#        expected_data = [
-#            {
-#                "name": "Some",
-#                "description": "Tru",
-#                "description_category": "th",
-#                "receipt_date": "2023-09-04T14:34:11.593501Z"
-#            },
-#            {
-#                "name": "Some 1",
-#                "description": "Tru 1",
-#                "description_category": "th",
-#                "receipt_date": "2023-09-04T14:34:11.593501Z"
-#            },
-#        ]
-#
-#        expected_data_order = [
-#            OrderedDict([('name', 'Some'), ('description', 'Tru'), ('description_category', 'th'), ('receipt_date', '2023-09-05T12:24:31.651165Z')]),
-#            OrderedDict([('name', 'Some 1'), ('description', 'Tru 1'), ('description_category', 'th'), ('receipt_date', '2023-09-05T12:24:31.652041Z')])
-#        ]
+        serializer_data1 = ProductSerializer(product_1).data
+        serializer_data2 = ProductSerializer(product_2).data
 
-        print(serializer_data)
-        #print(expected_data)
+        expected_data = [
+            {
+                'name': product_1.name,
+                'description': product_1.description,
+                'description_category': 'th',
+                'receipt_date': '2023-09-04T14:34:11.593501Z'
+            },
+            {
+                'name': 'Some 1',
+                'description': 'Tru 1',
+                'description_category': 'th',
+                'receipt_date': '2023-09-04T14:34:11.593501Z'
+            }
+        ]
 
-        self.assertEquals(serializer_data, serializer_data)
+
+        print(serializer_data1)
+        print(expected_data)
+
+        self.assertEquals(str(expected_data[0])[:-29], str(serializer_data1)[:-29])
+        self.assertEquals(str(expected_data[1])[:-29], str(serializer_data2)[:-29])
